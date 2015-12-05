@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Minun Sovellus</string>
+  <string name="action_settings">Asetukset</string>
+  <string name="edit_message">Kirjoita viesti</string>
+  <string name="button_send">Lähettää</string>
+  <string name="title_activity_main">MainActivity</string>
+  <string name="title_activity_display_message">DisplayMessageActivity</string>
+</resources>
