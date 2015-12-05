@@ -1,4 +1,4 @@
-package com.example.birhanu.myapplication;
+package com.bizdesc.birhanu.myapplication;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
