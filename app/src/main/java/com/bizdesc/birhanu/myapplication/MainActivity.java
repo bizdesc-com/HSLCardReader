@@ -1,7 +1,9 @@
 package com.bizdesc.birhanu.myapplication;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
             .setAction("Action", null).show();
       }
     });
+
+    // Make sure we're running on Honeycomb or higher to use ActionBar APIs
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+      // For the main activity, make sure the app icon in the action bar
+      // does not behave as a button
+      ActionBar actionBar = getActionBar();
+      actionBar.setHomeButtonEnabled(false);
+    }
+
     // ATTENTION: This was auto-generated to implement the App Indexing API.
     // See https://g.co/AppIndexing/AndroidStudio for more information.
     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
