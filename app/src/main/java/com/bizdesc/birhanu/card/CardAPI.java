@@ -1,11 +1,27 @@
 package com.bizdesc.birhanu.card;
 
+import com.gistlabs.mechanize.MechanizeAgent;
+import com.gistlabs.mechanize.document.Document;
+import com.gistlabs.mechanize.document.html.HtmlDocument;
+import com.gistlabs.mechanize.document.html.HtmlElement;
+import com.gistlabs.mechanize.document.html.HtmlNode;
+import com.gistlabs.mechanize.document.html.form.Form;
+import com.gistlabs.mechanize.document.html.form.FormElement;
+import com.gistlabs.mechanize.document.html.form.SubmitButton;
+
+import org.apache.http.impl.client.AbstractHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.byId;
+import static com.gistlabs.mechanize.document.html.query.HtmlQueryBuilder.byTag;
 
 /**
  * Created by birhanu on 12/7/15.
@@ -20,7 +36,7 @@ public class CardAPI {
   public static final Pattern DATE_PATTERN = Pattern.compile("^/Date\\(([0-9]+)\\)/$");
   public static final Pattern SESSION_EXISTS_PATTERN = Pattern.compile(".*on toinen avoin istunto.*"); // TODO english
 
-  public MatkakorttiApi(String username, String password) {
+  public CardAPI(String username, String password) {
     this.username = username;
     this.password = password;
   }
@@ -29,7 +45,7 @@ public class CardAPI {
     MechanizeAgent agent;
     try {
       agent = login();
-    } catch (MatkakorttiException me) {
+    } catch (CardException me) {
       if (!me.isInternalError() &&
           SESSION_EXISTS_PATTERN.matcher(me.getMessage()).matches()) // Try again once
         agent = login();
@@ -49,20 +65,20 @@ public class CardAPI {
         try {
           cardsJson = new JSONArray(matcher.group(1));
         } catch (JSONException jsone) {
-          throw new MatkakorttiException("JSON in page is not valid", jsone, true);
+          throw new CardException("JSON in page is not valid", jsone, true);
         }
 
         for (int i = 0; i < cardsJson.length(); i++) {
           try {
             cards.add(createCardFromJSON(cardsJson.getJSONObject(i)));
           } catch (JSONException jsone) {
-            throw new MatkakorttiException("Error when parsing card JSON", jsone, true);
+            throw new CardException("Error when parsing card JSON", jsone, true);
           }
         }
         return cards;
       }
     }
-    throw new MatkakorttiException("Couldn't locate JSON data in OmaMatkakortti response.", true);
+    throw new CardException("Couldn't locate JSON data in OmaMatkakortti response.", true);
   }
 
   private HtmlDocument safeGet(MechanizeAgent agent, String url) {
@@ -70,7 +86,7 @@ public class CardAPI {
       return agent.get(OMAMATKAKORTTI_URL_BASE + url);
     } catch (ClassCastException cce) {
       // MechanizeAgent throws this if not text/html
-      throw new MatkakorttiException("Page " + url + " not HTML", cce, true);
+      throw new CardException("Page " + url + " not HTML", cce, true);
     }
   }
 
@@ -82,14 +98,14 @@ public class CardAPI {
 
     Form loginForm = page.forms().get(byId("aspnetForm"));
     if (loginForm == null)
-      throw new MatkakorttiException("Couldn't find aspnetForm", true);
+      throw new CardException("Couldn't find aspnetForm", true);
 
 
     findField(loginForm, "UserName").set(username);
     findField(loginForm, "Password").set(password);
     FormElement loginButton = findField(loginForm, "LoginButton");
     if (!(loginButton instanceof SubmitButton))
-      throw new MatkakorttiException("LoginButton is not a SubmitButton", true);
+      throw new CardException("LoginButton is not a SubmitButton", true);
 
     HtmlDocument loginResponse = loginForm.submit((SubmitButton) loginButton);
     HtmlElement validationSummary = loginResponse.htmlElements().get(byId("Etuile_mainValidationSummary"));
@@ -97,7 +113,7 @@ public class CardAPI {
     if (validationSummary != null) {
       HtmlElement errorList = validationSummary.get(byTag("ul"));
       if (errorList == null)
-        throw new MatkakorttiException("Login response has validation summary but no error list", true);
+        throw new CardException("Login response has validation summary but no error list", true);
       String errors = "";
       // - 1 since the service will always complain about our browser.
       for (int i = 0; i < errorList.getChildren().size() - 1; i++) {
@@ -105,7 +121,7 @@ public class CardAPI {
         if (elem instanceof HtmlElement)
           errors += ((HtmlElement) elem).getText() + "\n";
       }
-      throw new MatkakorttiException(errors, false);
+      throw new CardException(errors, false);
     }
     return agent;
   }
@@ -115,7 +131,7 @@ public class CardAPI {
     FormElement formElement = loginForm.get(PREFIX + name);
 
     if (formElement == null)
-      throw new MatkakorttiException("Couldn't find field " + name + " in login form", true);
+      throw new CardException("Couldn't find field " + name + " in login form", true);
     return formElement;
   }
 
@@ -129,7 +145,7 @@ public class CardAPI {
     if (!expiryDateStr.equals("null")) {
       Matcher expiryDateMatch = DATE_PATTERN.matcher(expiryDateStr);
       if (!expiryDateMatch.matches()) {
-        throw new MatkakorttiException("Date pattern did not match regex: " + expiryDateStr, true);
+        throw new CardException("Date pattern did not match regex: " + expiryDateStr, true);
       }
       expiryDate = new Date(Long.parseLong(expiryDateMatch.group(1)));
     }
