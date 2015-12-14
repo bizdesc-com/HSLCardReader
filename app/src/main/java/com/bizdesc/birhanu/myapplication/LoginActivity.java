@@ -2,7 +2,6 @@ package com.bizdesc.birhanu.myapplication;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,11 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
   /**
    * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_login);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
 
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Make sure we're running on Honeycomb or higher to use ActionBar APIs
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      // For the main activity, make sure the app icon in the action bar
+      // For the login activity, make sure the app icon in the action bar
       // does not behave as a button
       ActionBar actionBar = getActionBar();
       actionBar.setHomeButtonEnabled(false);
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
    * Called when the user clicks the Send button
    */
   public void sendMessage(View view) {
-    Intent intent = new Intent(this, DisplayMessageActivity.class);
+    Intent intent = new Intent(this, DisplayCardActivity.class);
     EditText editText = (EditText) findViewById(R.id.edit_message);
     String message = editText.getText().toString();
     intent.putExtra(EXTRA_MESSAGE, message);

@@ -9,7 +9,7 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
         <activity
-          android:name="com.bizdesc.birhanu.myapplication.MainActivity"
+          android:name=".LoginActivity"
           android:label="@string/app_name"
           android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,13 +27,13 @@
           android:value="@integer/google_play_services_version"/>
 
         <activity
-          android:name="com.bizdesc.birhanu.myapplication.DisplayMessageActivity"
+          android:name=".DisplayCardActivity"
           android:label="@string/title_activity_display_message"
-          android:parentActivityName="com.bizdesc.birhanu.myapplication.MainActivity"
+          android:parentActivityName=".LoginActivity"
           android:theme="@style/AppTheme.NoActionBar">
             <meta-data
               android:name="android.support.PARENT_ACTIVITY"
-              android:value="com.bizdesc.birhanu.myapplication.MainActivity"/>
+              android:value=".LoginActivity"/>
         </activity>
 
     </application>
