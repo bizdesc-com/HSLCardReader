@@ -11,10 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
+import com.bizdesc.birhanu.card.Card;
+import com.bizdesc.birhanu.card.CardAPI;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
    * See https://g.co/AppIndexing/AndroidStudio for more information.
    */
   private GoogleApiClient client;
-  public final static String EXTRA_MESSAGE = "com.bizdesc.myapplication.MESSAGE";
+  public final static String CARDS = "com.bizdesc.myapplication.MESSAGE";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +87,18 @@ public class LoginActivity extends AppCompatActivity {
    */
   public void sendMessage(View view) {
     Intent intent = new Intent(this, DisplayCardActivity.class);
-    EditText editText = (EditText) findViewById(R.id.edit_message);
-    String message = editText.getText().toString();
-    intent.putExtra(EXTRA_MESSAGE, message);
+    AutoCompleteTextView emailText = (AutoCompleteTextView) findViewById(R.id.email);
+    EditText passwordText = (EditText) findViewById(R.id.password);
+    String email = emailText.getText().toString();
+    String password = passwordText.getText().toString();
+    CardAPI cardAPI = new CardAPI(email, password);
+    List<Card> cards = null;
+    try {
+      cards = cardAPI.getCards();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    intent.putStringArrayListExtra(CARDS, (ArrayList) cards);
     startActivity(intent);
   }
 
