@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.bizdesc.birhanu.data.Card;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardActivity extends AppCompatActivity {
@@ -17,7 +20,7 @@ public class CardActivity extends AppCompatActivity {
 
     // Get the message from the intent
     Intent intent = getIntent();
-    List cards = intent.getStringArrayExtra(LoginActivity.CARDS);
+    ArrayList<Card> cards = (ArrayList) intent.getSerializableExtra(LoginActivity.CARDS);
 
     // Create the text view
     TextView textView = new TextView(this);

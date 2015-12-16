@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
    * See https://g.co/AppIndexing/AndroidStudio for more information.
    */
   private GoogleApiClient client;
-  public final static String CARDS = "com.bizdesc.myapplication.MESSAGE";
+  public final static String CARDS = "com.bizdesc.myapplication.CARDS";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
     } catch (Exception e) {
       e.printStackTrace();
     }
-    intent.putStringArrayListExtra(CARDS, (ArrayList) cards);
+    intent.putExtra(CARDS, (ArrayList) cards);
     startActivity(intent);
   }
 
