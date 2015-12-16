@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class DisplayCardActivity extends AppCompatActivity {
+public class CardActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

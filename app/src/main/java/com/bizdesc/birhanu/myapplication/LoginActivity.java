@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
-import com.bizdesc.birhanu.card.Card;
-import com.bizdesc.birhanu.card.CardAPI;
+import com.bizdesc.birhanu.data.Card;
+import com.bizdesc.birhanu.cardapi.CardAPI;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
    * Called when the user clicks the Send button
    */
   public void sendMessage(View view) {
-    Intent intent = new Intent(this, DisplayCardActivity.class);
+    Intent intent = new Intent(this, CardActivity.class);
     AutoCompleteTextView emailText = (AutoCompleteTextView) findViewById(R.id.email);
     EditText passwordText = (EditText) findViewById(R.id.password);
     String email = emailText.getText().toString();
