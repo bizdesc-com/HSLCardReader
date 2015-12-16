@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class DisplayCardActivity extends AppCompatActivity {
 
   @Override
@@ -15,7 +17,7 @@ public class DisplayCardActivity extends AppCompatActivity {
 
     // Get the message from the intent
     Intent intent = getIntent();
-    String message = intent.getStringExtra(LoginActivity.EXTRA_MESSAGE);
+    List cards = intent.getStringArrayExtra(LoginActivity.CARDS);
 
     // Create the text view
     TextView textView = new TextView(this);

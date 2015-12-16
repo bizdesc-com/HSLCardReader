@@ -40,4 +40,5 @@ dependencies {
     compile files('src/main/java/libs/mechanize-0.11.0.jar')
     compile files('src/main/java/libs/httpclient-4.1.jar')
     compile files('src/main/java/libs/http-core-4.1.jar')
+    compile files('src/main/java/libs/volley.jar')
 }
