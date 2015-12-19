@@ -38,7 +38,7 @@
             android:textStyle="bold" />
 
           <TextView
-            android:id="@+id/timestamp"
+            android:id="@+id/expiryDate"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/timestamp"
@@ -47,7 +47,7 @@
       </LinearLayout>
 
       <TextView
-        android:id="@+id/txtStatusMsg"
+        android:id="@+id/cardId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="5dp"
@@ -56,7 +56,7 @@
         android:paddingTop="@dimen/card_item_status_pad_top" />
 
       <TextView
-        android:id="@+id/txtUrl"
+        android:id="@+id/money"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:linksClickable="true"
