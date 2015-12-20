@@ -5,23 +5,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bizdesc.birhanu.adapter.CardListAdapter;
 import com.bizdesc.birhanu.data.Card;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardActivity extends AppCompatActivity {
+  private static final String TAG = CardActivity.class.getSimpleName();
+  private ListView listView;
+  private CardListAdapter listAdapter;
+  private List<Card> cards;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_card);
 
     // Get the message from the intent
     Intent intent = getIntent();
-    ArrayList<Card> cards = (ArrayList) intent.getSerializableExtra(LoginActivity.CARDS);
+    cards = (ArrayList) intent.getSerializableExtra(LoginActivity.CARDS);
 
+    listView = (ListView) findViewById(R.id.list);
+    listAdapter = new CardListAdapter(this, cards);
+    listView.setAdapter(listAdapter);
+
+    /**
     // Create the text view
     TextView textView = new TextView(this);
     textView.setTextSize(40);
@@ -29,7 +41,7 @@ public class CardActivity extends AppCompatActivity {
 
     // Set the text view as the activity layout
     setContentView(textView);
-
+    **/
     //if (savedInstanceState == null) {
     //  getSupportFragmentManager().beginTransaction()
     //      .add(R.id.container, new PlaceholderFragment()).commit();

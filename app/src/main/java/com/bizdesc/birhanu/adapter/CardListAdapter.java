@@ -78,7 +78,7 @@ public class CardListAdapter extends BaseAdapter {
     cardId.setText(card.getId());
 
     money.setText(NumberFormat.getCurrencyInstance().format(card.getMoney()));
-    
+
     return convertView;
   }
 
