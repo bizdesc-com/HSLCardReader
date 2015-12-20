@@ -1,5 +1,6 @@
-package com.bizdesc.birhanu.card;
+package com.bizdesc.birhanu.cardapi;
 
+import com.bizdesc.birhanu.data.Card;
 import com.gistlabs.mechanize.MechanizeAgent;
 import com.gistlabs.mechanize.document.Document;
 import com.gistlabs.mechanize.document.html.HtmlDocument;

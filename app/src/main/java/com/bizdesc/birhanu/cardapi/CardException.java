@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.card;
+package com.bizdesc.birhanu.cardapi;
 
 /**
  * Created by birhanu on 12/7/15.
