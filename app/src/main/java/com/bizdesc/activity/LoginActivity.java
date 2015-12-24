@@ -144,27 +144,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     usernameTextView.setError(null);
     passwordTextView.setError(null);
 
-    String email = usernameTextView.getText().toString();
+    String username = usernameTextView.getText().toString();
     String password = passwordTextView.getText().toString();
 
     boolean cancelLogin = false;
     View focusView = null;
 
-    if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-      passwordTextView.setError(getString(R.string.invalid_password));
-      focusView = passwordTextView;
-      cancelLogin = true;
-    }
-
-    if (TextUtils.isEmpty(email)) {
-      usernameTextView.setError(getString(R.string.field_required));
-      focusView = usernameTextView;
-      cancelLogin = true;
-    } else if (!isEmailValid(email)) {
-      usernameTextView.setError(getString(R.string.invalid_email));
-      focusView = usernameTextView;
-      cancelLogin = true;
-    }
+    isEmailValid(username, focusView, cancelLogin);
+    isPasswordValid(password, focusView, cancelLogin);
 
     if (cancelLogin) {
       // error in login
@@ -172,19 +159,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     } else {
       // show progress spinner, and start background task to login
       showProgress(true);
-      userLoginTask = new UserLoginTask(email, password);
+      userLoginTask = new UserLoginTask(username, password);
       userLoginTask.execute((Void) null);
     }
   }
 
-  private boolean isEmailValid(String email) {
+  private boolean isEmailValid(String username, View focusView, boolean cancelLogin) {
     //add your own logic
-    return email.contains("@");
+    if (TextUtils.isEmpty(username)) {
+      usernameTextView.setError(getString(R.string.field_required));
+      focusView = usernameTextView;
+      cancelLogin = true;
+    } else if (username.length() < 6) {
+      usernameTextView.setError(getString(R.string.short_username));
+      focusView = usernameTextView;
+      cancelLogin = true;
+    }
+
+    return true;
   }
 
-  private boolean isPasswordValid(String password) {
-    //add your own logic
-    return password.length() > 4;
+  private boolean isPasswordValid(String password, View focusView, boolean cancelLogin) {
+    //validation checker for HSL password
+    if (password.length() < 8) {
+      passwordTextView.setError(getString(R.string.short_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    } else if ((password.length() > 15)) {
+      passwordTextView.setError(getString(R.string.long_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    } else if (!TextUtils.isEmpty(password)) {
+      passwordTextView.setError(getString(R.string.empty_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    }
+    return true;
   }
 
   /**
@@ -222,7 +232,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       loginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
     }
   }
-
 
   @Override
   public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
