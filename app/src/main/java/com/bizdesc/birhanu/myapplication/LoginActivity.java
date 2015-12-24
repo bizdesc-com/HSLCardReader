@@ -1,18 +1,27 @@
 package com.bizdesc.birhanu.myapplication;
 
 import android.app.ActionBar;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.util.Linkify;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.bizdesc.birhanu.data.Card;
 import com.bizdesc.birhanu.cardapi.CardAPI;
@@ -22,7 +31,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
   /**
    * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -30,6 +39,14 @@ public class LoginActivity extends AppCompatActivity {
    */
   private GoogleApiClient client;
   public final static String CARDS = "com.bizdesc.myapplication.CARDS";
+  private static final String DUMMY_CREDENTIALS = "user@test.com:hello";
+
+  private UserLoginTask userLoginTask = null;
+  private View loginFormView;
+  private View progressView;
+  private AutoCompleteTextView emailTextView;
+  private EditText passwordTextView;
+  private TextView signUpTextView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +54,46 @@ public class LoginActivity extends AppCompatActivity {
     setContentView(R.layout.activity_login);
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+
+    emailTextView = (AutoCompleteTextView) findViewById(R.id.email);
+    loadAutoComplete();
+
+    passwordTextView = (EditText) findViewById(R.id.password);
+    passwordTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+      @Override
+      public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+        if (id == EditorInfo.IME_NULL) {
+          initLogin();
+          return true;
+        }
+        return false;
+      }
+    });
+
+    Button loginButton = (Button) findViewById(R.id.email_sign_in_button);
+    loginButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        initLogin();
+      }
+    });
+
+    loginFormView = findViewById(R.id.login_form);
+    progressView = findViewById(R.id.login_progress);
+
+    //adding underline and link to signup textview
+    signUpTextView = (TextView) findViewById(R.id.signUpTextView);
+    signUpTextView.setPaintFlags(signUpTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+    Linkify.addLinks(signUpTextView, Linkify.ALL);
+
+    signUpTextView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Log.i("LoginActivity", "Sign Up Activity activated.");
+        // this is where you should start the signup Activity
+        // LoginActivity.this.startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+      }
+    });
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
