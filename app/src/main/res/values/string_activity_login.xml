@@ -5,6 +5,7 @@
   <string name="prompt_password">Password</string>
   <string name="hsl_card_reader">HSL Card Reader</string>
   <string name="action_sign_in">Log In</string>
+  <string name="action_sign_up">Sign Up</string>
   <string name="invalid_email">This email address is invalid</string>
   <string name="invalid_password">Password is too short</string>
   <string name="incorrect_password">Password is incorrect</string>
