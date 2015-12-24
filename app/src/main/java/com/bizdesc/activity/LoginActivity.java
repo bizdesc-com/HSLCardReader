@@ -150,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     boolean cancelLogin = false;
     View focusView = null;
 
-    isEmailValid(username, focusView, cancelLogin);
+    isUsernameValid(username, focusView, cancelLogin);
     isPasswordValid(password, focusView, cancelLogin);
 
     if (cancelLogin) {
@@ -164,7 +164,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
   }
 
-  private boolean isEmailValid(String username, View focusView, boolean cancelLogin) {
+  //minor username validation
+  private boolean isUsernameValid(String username, View focusView, boolean cancelLogin) {
     //add your own logic
     if (TextUtils.isEmpty(username)) {
       usernameTextView.setError(getString(R.string.field_required));
@@ -179,6 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     return true;
   }
 
+  //minor password validation 
   private boolean isPasswordValid(String password, View focusView, boolean cancelLogin) {
     //validation checker for HSL password
     if (password.length() < 8) {
