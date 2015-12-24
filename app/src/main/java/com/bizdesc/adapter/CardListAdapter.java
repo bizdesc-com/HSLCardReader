@@ -1,26 +1,18 @@
-package com.bizdesc.birhanu.adapter;
+package com.bizdesc.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.text.Html;
-import android.text.TextUtils;
-import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bizdesc.birhanu.data.Card;
-import com.bizdesc.birhanu.myapplication.R;
+import com.bizdesc.birhanu.activity.R;
+import com.bizdesc.data.Card;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
 import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**

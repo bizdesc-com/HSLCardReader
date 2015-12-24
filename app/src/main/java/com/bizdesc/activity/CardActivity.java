@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.myapplication;
+package com.bizdesc.activity;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bizdesc.birhanu.adapter.CardListAdapter;
-import com.bizdesc.birhanu.data.Card;
+import com.bizdesc.adapter.CardListAdapter;
+import com.bizdesc.birhanu.activity.R;
+import com.bizdesc.data.Card;
 
 import java.util.ArrayList;
 import java.util.List;

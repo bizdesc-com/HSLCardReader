@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.myapplication;
+package com.bizdesc.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,9 +23,9 @@ import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -33,8 +33,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bizdesc.birhanu.data.Card;
-import com.bizdesc.birhanu.cardapi.CardAPI;
+import com.bizdesc.birhanu.activity.R;
+import com.bizdesc.cardapi.CardAPI;
+import com.bizdesc.data.Card;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -282,11 +283,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
    */
   public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-    private final String emailStr;
+    private final String usernameameStr;
     private final String passwordStr;
 
     UserLoginTask(String email, String password) {
-      emailStr = email;
+   usernameernameStr = email;
       passwordStr = password;
     }
 
@@ -303,7 +304,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
       //using a local dummy credentials store to authenticate
       String[] pieces = DUMMY_CREDENTIALS.split(":");
-      if (pieces[0].equals(emailStr) && pieces[1].equals(passwordStr)) {
+      if (pieces[0].eusername(usernameStr) && pieces[1].equals(passwordStr)) {
         return true;
       } else {
         return false;
