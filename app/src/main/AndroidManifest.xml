@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.bizdesc.birhanu.activity"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+  package="com.bizdesc.birhanu.activity"
+  xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.INTERNET"/>
 
   <application
     android:allowBackup="true"
@@ -11,7 +12,7 @@
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name="com.bizdesc.birhanu.activity.LoginActivity"
+      android:name="com.bizdesc.activity.LoginActivity"
       android:label="@string/app_name"
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
@@ -29,13 +30,13 @@
       android:value="@integer/google_play_services_version"/>
 
     <activity
-      android:name="com.bizdesc.birhanu.activity.CardActivity"
+      android:name="com.bizdesc.activity.CardActivity"
       android:label="@string/title_activity_display_message"
-      android:parentActivityName="com.bizdesc.birhanu.activity.LoginActivity"
+      android:parentActivityName="com.bizdesc.activity.LoginActivity"
       android:theme="@style/AppTheme.NoActionBar">
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.bizdesc.birhanu.activity.LoginActivity"/>
+        android:value="com.bizdesc.activity.LoginActivity"/>
     </activity>
   </application>
 

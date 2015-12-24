@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
    * See https://g.co/AppIndexing/AndroidStudio for more information.
    */
   private GoogleApiClient client;
-  public final static String CARDS = "com.bizdesc.myapplication.CARDS";
+  public final static String CARDS = "com.bizdesc.CARDS";
   private static final String DUMMY_CREDENTIALS = "user@test.com:hello";
 
   private UserLoginTask userLoginTask = null;
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       }
     });
 
-    Button loginButton = (Button) findViewById(R.id.email_sign_in_button);
+    Button loginButton = (Button) findViewById(R.id.username_sign_in_button);
     loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -283,11 +283,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
    */
   public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-    private final String usernameameStr;
+    private final String usernameStr;
     private final String passwordStr;
 
     UserLoginTask(String email, String password) {
-   usernameernameStr = email;
+      usernameStr = email;
       passwordStr = password;
     }
 
@@ -304,7 +304,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
       //using a local dummy credentials store to authenticate
       String[] pieces = DUMMY_CREDENTIALS.split(":");
-      if (pieces[0].eusername(usernameStr) && pieces[1].equals(passwordStr)) {
+      if (pieces[0].equals(usernameStr) && pieces[1].equals(passwordStr)) {
         return true;
       } else {
         return false;
