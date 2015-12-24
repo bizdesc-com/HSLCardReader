@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     return true;
   }
 
-  //minor password validation 
+  //minor password validation
   private boolean isPasswordValid(String password, View focusView, boolean cancelLogin) {
     //validation checker for HSL password
     if (password.length() < 8) {
@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       cursor.moveToNext();
     }
 
-    addEmailsToAutoComplete(emails);
+    addUsernamesToAutoComplete(emails);
   }
 
   @Override
@@ -269,7 +269,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
   }
 
-  private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+  private void addUsernamesToAutoComplete(List<String> emailAddressCollection) {
     //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
     ArrayAdapter<String> adapter =
         new ArrayAdapter<String>(LoginActivity.this,
