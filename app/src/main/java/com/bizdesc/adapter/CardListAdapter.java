@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.bizdesc.birhanu.activity.R;
+import com.bizdesc.activity.R;
 import com.bizdesc.data.Card;
 
 import java.text.NumberFormat;

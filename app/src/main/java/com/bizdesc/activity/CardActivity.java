@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.bizdesc.adapter.CardListAdapter;
-import com.bizdesc.birhanu.activity.R;
 import com.bizdesc.data.Card;
 
 import java.util.ArrayList;

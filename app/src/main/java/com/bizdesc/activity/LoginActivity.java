@@ -33,7 +33,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bizdesc.birhanu.activity.R;
 import com.bizdesc.cardapi.CardAPI;
 import com.bizdesc.data.Card;
 import com.google.android.gms.appindexing.AppIndex;
@@ -58,6 +57,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
   private AutoCompleteTextView usernameTextView;
   private EditText passwordTextView;
   private TextView signUpTextView;
+
+
+  // Call intent class
+  Intent intent = new Intent(this, CardActivity.class);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     loginFormView = findViewById(R.id.login_form);
     progressView = findViewById(R.id.login_progress);
 
-    //adding underline and link to signup textview
+    // Adding underline and link to signup textview
     signUpTextView = (TextView) findViewById(R.id.signUpTextView);
     signUpTextView.setPaintFlags(signUpTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     Linkify.addLinks(signUpTextView, Linkify.ALL);
@@ -297,8 +300,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private final String usernameStr;
     private final String passwordStr;
 
-    UserLoginTask(String email, String password) {
-      usernameStr = email;
+    UserLoginTask(String username, String password) {
+      usernameStr = username;
       passwordStr = password;
     }
 
@@ -307,6 +310,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       //this is where you should write your authentication code
       // or call external service
       // following try-catch just simulates network access
+      CardAPI cardAPI = new CardAPI(usernameStr, passwordStr);
+      List<Card> cards = null;
+      try {
+        cards = cardAPI.getCards();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      intent.putExtra(CARDS, (ArrayList) cards);
+      startActivity(intent);
+
       try {
         Thread.sleep(2000);
       } catch (InterruptedException e) {
@@ -365,26 +378,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     return super.onOptionsItemSelected(item);
   }
-
-  /**
-   * Called when the user clicks the Send button
-   */
-  public void sendMessage(View view) {
-    Intent intent = new Intent(this, CardActivity.class);
-    AutoCompleteTextView emailText = (AutoCompleteTextView) findViewById(R.id.username);
-    EditText passwordText = (EditText) findViewById(R.id.password);
-    String email = emailText.getText().toString();
-    String password = passwordText.getText().toString();
-    CardAPI cardAPI = new CardAPI(email, password);
-    List<Card> cards = null;
-    try {
-      cards = cardAPI.getCards();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    intent.putExtra(CARDS, (ArrayList) cards);
-    startActivity(intent);
-  }
-
 
 }
