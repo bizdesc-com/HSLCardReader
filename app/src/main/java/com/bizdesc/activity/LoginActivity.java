@@ -310,22 +310,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       //this is where you should write your authentication code
       // or call external service
       // following try-catch just simulates network access
+      /**
       CardAPI cardAPI = new CardAPI(usernameStr, passwordStr);
       List<Card> cards = null;
       try {
         cards = cardAPI.getCards();
       } catch (Exception e) {
         e.printStackTrace();
+        return false;
       }
       intent.putExtra(CARDS, (ArrayList) cards);
       startActivity(intent);
-
-      try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e) {
-        return false;
-      }
-
+      */
       //using a local dummy credentials store to authenticate
       String[] pieces = DUMMY_CREDENTIALS.split(":");
       if (pieces[0].equals(usernameStr) && pieces[1].equals(passwordStr)) {
