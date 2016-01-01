@@ -28,8 +28,8 @@ public class CardActivity extends AppCompatActivity {
 
     // Get the message from the intent
     Intent intent = getIntent();
-    Card card1 = new Card("My card", "ID1", new BigDecimal(23.334), new Date());
-    Card card2 = new Card("My card 2", "ID2", new BigDecimal(43.12), new Date());
+    Card card1 = new Card("Birhanu Hailemariam", "Matkakortti", new BigDecimal(23.334), new Date());
+    Card card2 = new Card("Jhon Boyer", "Travel card", new BigDecimal(43.12), new Date());
     cards = new ArrayList<>();
     cards.add(card1);
     cards.add(card2);

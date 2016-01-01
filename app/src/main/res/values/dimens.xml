@@ -7,9 +7,10 @@
   <dimen name="card_item_margin">10dp</dimen>
   <dimen name="card_item_padding_top_bottom">20dp</dimen>
   <dimen name="card_item_padding_left_right">15dp</dimen>
-  <dimen name="card_item_profile_pic">50dp</dimen>
+  <dimen name="card_item_money_width">100dp</dimen>
+  <dimen name="card_item_money_height">50dp</dimen>
   <dimen name="card_item_profile_info_padding">10dp</dimen>
-  <dimen name="card_item_profile_name">15dp</dimen>
+  <dimen name="card_item_profile_name">20dp</dimen>
   <dimen name="card_item_timestamp">13dp</dimen>
   <dimen name="card_item_status_pad_left_right">15dp</dimen>
   <dimen name="card_item_status_pad_top">13dp</dimen>

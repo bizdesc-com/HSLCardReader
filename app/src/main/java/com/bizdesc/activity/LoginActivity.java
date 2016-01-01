@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
    */
   private GoogleApiClient client;
   public final static String CARDS = "com.bizdesc.CARDS";
-  private static final String DUMMY_CREDENTIALS = "bir-ham:Nuharib83";
+  private static final String DUMMY_CREDENTIALS = "test:test";
 
   private UserLoginTask userLoginTask = null;
   private View loginFormView;

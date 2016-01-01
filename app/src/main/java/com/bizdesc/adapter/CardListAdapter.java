@@ -2,6 +2,7 @@ package com.bizdesc.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class CardListAdapter extends BaseAdapter {
       convertView = inflater.inflate(R.layout.card_item, null);
 
     TextView name = (TextView) convertView.findViewById(R.id.name);
+    name.setTypeface(null, Typeface.BOLD);
     TextView expiryDate = (TextView) convertView
         .findViewById(R.id.expiryDate);
     TextView cardId = (TextView) convertView
