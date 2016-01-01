@@ -10,6 +10,7 @@
 
 
   <color name="white">#ffffff</color>
+  <color name="green">#2ecc71</color>
   <color name="card_bg">#d3d6db</color>
   <color name="card_item_bg">#ffffff</color>
   <color name="card_item_border">#c2c3c8</color>

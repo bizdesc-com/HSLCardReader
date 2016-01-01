@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.myapplication;
+package com.bizdesc.activity;
 
 import org.junit.Test;
 

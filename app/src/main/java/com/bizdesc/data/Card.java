@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.data;
+package com.bizdesc.data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

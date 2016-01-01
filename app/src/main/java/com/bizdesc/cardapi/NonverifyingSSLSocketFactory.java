@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.cardapi;
+package com.bizdesc.cardapi;
 
 import org.apache.http.HttpVersion;
 import org.apache.http.conn.ClientConnectionManager;

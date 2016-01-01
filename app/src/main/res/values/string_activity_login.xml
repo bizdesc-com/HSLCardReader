@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <!-- Strings related to login -->
-  <string name="prompt_email">Email</string>
+  <string name="prompt_username">Username</string>
   <string name="prompt_password">Password</string>
-  <string name="action_sign_in">Login</string>
-  <string name="invalid_email">This email address is invalid</string>
-  <string name="invalid_password">Password is too short</string>
+  <string name="hsl_card_reader">HSL Card Reader</string>
+  <string name="action_sign_in">Log In</string>
+  <string name="action_sign_up">Sign Up</string>
+  <string name="invalid_username">This username address is invalid</string>
+  <string name="short_username">This username is too short</string>
+  <string name="empty_password">Password is empty</string>
+  <string name="short_password">Password is too short</string>
+  <string name="long_password">Password is too long</string>
   <string name="incorrect_password">Password is incorrect</string>
   <string name="field_required">This field is required</string>
 </resources>

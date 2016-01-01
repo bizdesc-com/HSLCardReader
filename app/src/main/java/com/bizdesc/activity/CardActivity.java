@@ -1,4 +1,4 @@
-package com.bizdesc.birhanu.myapplication;
+package com.bizdesc.activity;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bizdesc.birhanu.adapter.CardListAdapter;
-import com.bizdesc.birhanu.data.Card;
+import com.bizdesc.adapter.CardListAdapter;
+import com.bizdesc.data.Card;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CardActivity extends AppCompatActivity {
@@ -27,11 +28,16 @@ public class CardActivity extends AppCompatActivity {
 
     // Get the message from the intent
     Intent intent = getIntent();
-    cards = (ArrayList) intent.getSerializableExtra(LoginActivity.CARDS);
+    Card card1 = new Card("Birhanu Hailemariam", "Matkakortti", new BigDecimal(23.334), new Date());
+    Card card2 = new Card("Jhon Boyer", "Travel card", new BigDecimal(43.12), new Date());
+    cards = new ArrayList<>();
+    cards.add(card1);
+    cards.add(card2);
 
     listView = (ListView) findViewById(R.id.list);
     listAdapter = new CardListAdapter(this, cards);
     listView.setAdapter(listAdapter);
+
 
     /**
     // Create the text view

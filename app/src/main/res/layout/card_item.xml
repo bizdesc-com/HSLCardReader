@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/card_bg"
-                android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/card_bg"
+    android:orientation="vertical" >
 
-    <LinearLayout
+  <LinearLayout
       android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
+      android:layout_height="wrap_content"
 
       android:layout_marginLeft="@dimen/card_item_margin"
       android:layout_marginRight="@dimen/card_item_margin"
@@ -17,54 +17,54 @@
       android:paddingBottom="@dimen/card_item_padding_top_bottom"
       android:paddingTop="@dimen/card_item_padding_top_bottom" >
 
-      <LinearLayout
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/card_item_padding_left_right"
-        android:paddingRight="@dimen/card_item_padding_left_right" >
+        android:orientation="horizontal">
 
-        <LinearLayout
-          android:layout_width="fill_parent"
+      <LinearLayout
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
+          android:layout_weight="1"
           android:orientation="vertical"
-          android:paddingLeft="@dimen/card_item_profile_info_padd" >
+          android:paddingLeft="@dimen/card_item_profile_info_padding">
 
-          <TextView
+        <TextView
             android:id="@+id/name"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/card_item_profile_name"
             android:textStyle="bold" />
 
-          <TextView
-            android:id="@+id/expiryDate"
+        <TextView
+            android:id="@+id/cardId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/timestamp"
             android:textSize="@dimen/card_item_timestamp" />
-        </LinearLayout>
+
+        <TextView
+            android:id="@+id/expiryDate"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingTop="@dimen/card_item_status_pad_top" />
+
       </LinearLayout>
 
-      <TextView
-        android:id="@+id/cardId"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingLeft="@dimen/card_item_status_pad_left_right"
-        android:paddingRight="@dimen/card_item_status_pad_left_right"
-        android:paddingTop="@dimen/card_item_status_pad_top" />
-
-      <TextView
+    <TextView
         android:id="@+id/money"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:linksClickable="true"
-        android:paddingBottom="10dp"
-        android:paddingLeft="@dimen/card_item_status_pad_left_right"
-        android:paddingRight="@dimen/card_item_status_pad_left_right"
-        android:textColorLink="@color/link" />
+        android:layout_width="@dimen/card_item_money_width"
+        android:layout_height="@dimen/card_item_money_height"
+        android:textColor="@color/green"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_gravity="center"/>
 
     </LinearLayout>
 
+
+
   </LinearLayout>
+
+</LinearLayout>

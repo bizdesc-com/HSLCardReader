@@ -1,11 +1,12 @@
-package com.bizdesc.birhanu.myapplication;
+package com.bizdesc.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
+import android.app.ActionBar;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Paint;
@@ -14,12 +15,17 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,23 +33,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.bizdesc.birhanu.myapplication.R;
+import com.bizdesc.cardapi.CardAPI;
+import com.bizdesc.data.Card;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-/**
- * Android login screen Activity
- */
-public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> {
-
-  private static final String DUMMY_CREDENTIALS = "user@test.com:hello";
+  /**
+   * ATTENTION: This was auto-generated to implement the App Indexing API.
+   * See https://g.co/AppIndexing/AndroidStudio for more information.
+   */
+  private GoogleApiClient client;
+  public final static String CARDS = "com.bizdesc.CARDS";
+  private static final String DUMMY_CREDENTIALS = "test:test";
 
   private UserLoginTask userLoginTask = null;
   private View loginFormView;
   private View progressView;
-  private AutoCompleteTextView emailTextView;
+  private AutoCompleteTextView usernameTextView;
   private EditText passwordTextView;
   private TextView signUpTextView;
 
@@ -51,8 +65,10 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
+    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(toolbar);
 
-    emailTextView = (AutoCompleteTextView) findViewById(R.id.email);
+    usernameTextView = (AutoCompleteTextView) findViewById(R.id.username);
     loadAutoComplete();
 
     passwordTextView = (EditText) findViewById(R.id.password);
@@ -67,8 +83,8 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
       }
     });
 
-    Button loginButton = (Button) findViewById(R.id.email_sign_in_button);
-    loginButton.setOnClickListener(new OnClickListener() {
+    Button loginButton = (Button) findViewById(R.id.username_sign_in_button);
+    loginButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         initLogin();
@@ -78,12 +94,12 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
     loginFormView = findViewById(R.id.login_form);
     progressView = findViewById(R.id.login_progress);
 
-    //adding underline and link to signup textview
+    // Adding underline and link to signup textview
     signUpTextView = (TextView) findViewById(R.id.signUpTextView);
     signUpTextView.setPaintFlags(signUpTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     Linkify.addLinks(signUpTextView, Linkify.ALL);
 
-    signUpTextView.setOnClickListener(new OnClickListener() {
+    signUpTextView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
         Log.i("LoginActivity", "Sign Up Activity activated.");
@@ -91,12 +107,25 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
         // LoginActivity.this.startActivity(new Intent(LoginActivity.this, SignupActivity.class));
       }
     });
+
+    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    fab.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show();
+      }
+    });
+
+    // ATTENTION: This was auto-generated to implement the App Indexing API.
+    // See https://g.co/AppIndexing/AndroidStudio for more information.
+    client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
   }
 
   private void loadAutoComplete() {
+
     getLoaderManager().initLoader(0, null, this);
   }
-
 
   /**
    * Validate Login form and authenticate.
@@ -106,30 +135,17 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
       return;
     }
 
-    emailTextView.setError(null);
+    usernameTextView.setError(null);
     passwordTextView.setError(null);
 
-    String email = emailTextView.getText().toString();
+    String username = usernameTextView.getText().toString();
     String password = passwordTextView.getText().toString();
 
     boolean cancelLogin = false;
     View focusView = null;
 
-    if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-      passwordTextView.setError(getString(R.string.invalid_password));
-      focusView = passwordTextView;
-      cancelLogin = true;
-    }
-
-    if (TextUtils.isEmpty(email)) {
-      emailTextView.setError(getString(R.string.field_required));
-      focusView = emailTextView;
-      cancelLogin = true;
-    } else if (!isEmailValid(email)) {
-      emailTextView.setError(getString(R.string.invalid_email));
-      focusView = emailTextView;
-      cancelLogin = true;
-    }
+    isUsernameValid(username, focusView, cancelLogin);
+    isPasswordValid(password, focusView, cancelLogin);
 
     if (cancelLogin) {
       // error in login
@@ -137,19 +153,45 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
     } else {
       // show progress spinner, and start background task to login
       showProgress(true);
-      userLoginTask = new UserLoginTask(email, password);
+      userLoginTask = new UserLoginTask(username, password);
       userLoginTask.execute((Void) null);
+      // Call intent class
     }
   }
 
-  private boolean isEmailValid(String email) {
+  //minor username validation
+  private boolean isUsernameValid(String username, View focusView, boolean cancelLogin) {
     //add your own logic
-    return email.contains("@");
+    if (TextUtils.isEmpty(username)) {
+      usernameTextView.setError(getString(R.string.field_required));
+      focusView = usernameTextView;
+      cancelLogin = true;
+    } else if (username.length() < 6) {
+      usernameTextView.setError(getString(R.string.short_username));
+      focusView = usernameTextView;
+      cancelLogin = true;
+    }
+
+    return true;
   }
 
-  private boolean isPasswordValid(String password) {
-    //add your own logic
-    return password.length() > 4;
+  //minor password validation
+  private boolean isPasswordValid(String password, View focusView, boolean cancelLogin) {
+    //validation checker for HSL password
+    if (password.length() < 8) {
+      passwordTextView.setError(getString(R.string.short_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    } else if ((password.length() > 15)) {
+      passwordTextView.setError(getString(R.string.long_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    } else if (!TextUtils.isEmpty(password)) {
+      passwordTextView.setError(getString(R.string.empty_password));
+      focusView = passwordTextView;
+      cancelLogin = true;
+    }
+    return true;
   }
 
   /**
@@ -188,7 +230,6 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
     }
   }
 
-
   @Override
   public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
     return new CursorLoader(this,
@@ -215,7 +256,7 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
       cursor.moveToNext();
     }
 
-    addEmailsToAutoComplete(emails);
+    addUsernamesToAutoComplete(emails);
   }
 
   @Override
@@ -223,13 +264,13 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
 
   }
 
-  private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+  private void addUsernamesToAutoComplete(List<String> emailAddressCollection) {
     //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
     ArrayAdapter<String> adapter =
-        new ArrayAdapter<String>(Login2Activity.this,
+        new ArrayAdapter<String>(LoginActivity.this,
             android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-    emailTextView.setAdapter(adapter);
+    usernameTextView.setAdapter(adapter);
   }
 
 
@@ -248,11 +289,11 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
    */
   public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-    private final String emailStr;
+    private final String usernameStr;
     private final String passwordStr;
 
-    UserLoginTask(String email, String password) {
-      emailStr = email;
+    UserLoginTask(String username, String password) {
+      usernameStr = username;
       passwordStr = password;
     }
 
@@ -261,15 +302,27 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
       //this is where you should write your authentication code
       // or call external service
       // following try-catch just simulates network access
+
+      // Call intent class
+      //Intent intent = new Intent(new LoginActivity(), CardActivity.class);
+      /**
+      CardAPI cardAPI = new CardAPI(usernameStr, passwordStr);
+      List<Card> cards = null;
       try {
-        Thread.sleep(2000);
-      } catch (InterruptedException e) {
+        cards = cardAPI.getCards();
+      } catch (Exception e) {
+        e.printStackTrace();
         return false;
       }
-
+      intent.putExtra(CARDS, (ArrayList) cards);
+      startActivity(intent);
+      */
       //using a local dummy credentials store to authenticate
       String[] pieces = DUMMY_CREDENTIALS.split(":");
-      if (pieces[0].equals(emailStr) && pieces[1].equals(passwordStr)) {
+      if (pieces[0].equals(usernameStr) && pieces[1].equals(passwordStr)) {
+
+        Intent intent = new Intent(LoginActivity.this, CardActivity.class);
+        startActivity(intent);
         return true;
       } else {
         return false;
@@ -297,4 +350,27 @@ public class Login2Activity extends Activity implements LoaderCallbacks<Cursor> 
       showProgress(false);
     }
   }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    // Inflate the menu; this adds items to the action bar if it is present.
+    getMenuInflater().inflate(R.menu.menu_main, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // Handle action bar item clicks here. The action bar will
+    // automatically handle clicks on the Home/Up button, so long
+    // as you specify a parent activity in AndroidManifest.xml.
+    int id = item.getItemId();
+
+    //noinspection SimplifiableIfStatement
+    if (id == R.id.action_settings) {
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
+  }
+
 }
