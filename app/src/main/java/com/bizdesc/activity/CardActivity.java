@@ -10,7 +10,9 @@ import android.widget.ListView;
 import com.bizdesc.adapter.CardListAdapter;
 import com.bizdesc.data.Card;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CardActivity extends AppCompatActivity {
@@ -26,11 +28,16 @@ public class CardActivity extends AppCompatActivity {
 
     // Get the message from the intent
     Intent intent = getIntent();
-    cards = (ArrayList) intent.getSerializableExtra(LoginActivity.CARDS);
+    Card card1 = new Card("My card", "ID1", new BigDecimal(23.334), new Date());
+    Card card2 = new Card("My card 2", "ID2", new BigDecimal(43.12), new Date());
+    cards = new ArrayList<>();
+    cards.add(card1);
+    cards.add(card2);
 
     listView = (ListView) findViewById(R.id.list);
     listAdapter = new CardListAdapter(this, cards);
     listView.setAdapter(listAdapter);
+
 
     /**
     // Create the text view

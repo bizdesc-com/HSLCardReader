@@ -38,8 +38,11 @@ import com.bizdesc.data.Card;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
@@ -49,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
    */
   private GoogleApiClient client;
   public final static String CARDS = "com.bizdesc.CARDS";
-  private static final String DUMMY_CREDENTIALS = "user@test.com:hello";
+  private static final String DUMMY_CREDENTIALS = "bir-ham:Nuharib83";
 
   private UserLoginTask userLoginTask = null;
   private View loginFormView;
@@ -57,10 +60,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
   private AutoCompleteTextView usernameTextView;
   private EditText passwordTextView;
   private TextView signUpTextView;
-
-
-  // Call intent class
-  Intent intent = new Intent(this, CardActivity.class);
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -118,14 +117,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       }
     });
 
-    // Make sure we're running on Honeycomb or higher to use ActionBar APIs
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-      // For the login activity, make sure the app icon in the action bar
-      // does not behave as a button
-      ActionBar actionBar = getActionBar();
-      actionBar.setHomeButtonEnabled(false);
-    }
-
     // ATTENTION: This was auto-generated to implement the App Indexing API.
     // See https://g.co/AppIndexing/AndroidStudio for more information.
     client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -164,6 +155,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       showProgress(true);
       userLoginTask = new UserLoginTask(username, password);
       userLoginTask.execute((Void) null);
+      // Call intent class
     }
   }
 
@@ -310,6 +302,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       //this is where you should write your authentication code
       // or call external service
       // following try-catch just simulates network access
+
+      // Call intent class
+      //Intent intent = new Intent(new LoginActivity(), CardActivity.class);
       /**
       CardAPI cardAPI = new CardAPI(usernameStr, passwordStr);
       List<Card> cards = null;
@@ -325,6 +320,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       //using a local dummy credentials store to authenticate
       String[] pieces = DUMMY_CREDENTIALS.split(":");
       if (pieces[0].equals(usernameStr) && pieces[1].equals(passwordStr)) {
+
+        Intent intent = new Intent(LoginActivity.this, CardActivity.class);
+        startActivity(intent);
         return true;
       } else {
         return false;
