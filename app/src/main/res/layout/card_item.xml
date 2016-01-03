@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/card_bg"
+    android:background="@color/white"
     android:orientation="vertical" >
 
   <LinearLayout
@@ -12,7 +12,7 @@
       android:layout_marginLeft="@dimen/card_item_margin"
       android:layout_marginRight="@dimen/card_item_margin"
       android:layout_marginTop="@dimen/card_item_margin"
-      android:background="@drawable/bg_parent_rounded_corner"
+      android:background="@drawable/shadowed_card_item"
       android:orientation="vertical"
       android:paddingBottom="@dimen/card_item_padding_top_bottom"
       android:paddingTop="@dimen/card_item_padding_top_bottom" >
