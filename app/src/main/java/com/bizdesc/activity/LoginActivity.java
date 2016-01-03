@@ -65,8 +65,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_login);
-    Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-    setSupportActionBar(toolbar);
 
     usernameTextView = (AutoCompleteTextView) findViewById(R.id.username);
     loadAutoComplete();
@@ -105,15 +103,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Log.i("LoginActivity", "Sign Up Activity activated.");
         // this is where you should start the signup Activity
         // LoginActivity.this.startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-      }
-    });
-
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show();
       }
     });
 
